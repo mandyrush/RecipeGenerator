@@ -1,0 +1,60 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs') %>
+<main class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-5">
+            <h1>Add Recipe</h1>
+            <form>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="meal">Meal Type</label>
+                    <select class="custom-select" id="meal">
+                        <option selected>Breakfast</option>
+                        <option value="1">Lunch</option>
+                        <option value="2">Dinner</option>
+                        <option value="3">Snacks</option>
+                        <option value="3">Dessert</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Add Image</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <label for="quantity">Quantity</label>
+                        <input type="text" class="form-control" id="quantity">
+                    </div>
+                    <div class="form-group col-8">
+                        <label for="ingredient">Ingredient</label>
+                        <input type="text" class="form-control" id="ingredient">
+                    </div>
+                    <div class="form-group col-1 mt-auto">
+                        <button class="btn btn-primary">+</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-11">
+                        <label for="directions">Directions</label>
+                        <input type="text" class="form-control" id="directions">
+                    </div>
+                    <div class="form-group col-1 mt-auto">
+                        <button class="btn btn-primary">+</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
+<%- include('../includes/end.ejs') %>
