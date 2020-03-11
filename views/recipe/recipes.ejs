@@ -10,17 +10,23 @@
                 <h1>My Recipes</h1>
                 <a href="/add-recipe">Add Recipe</a>
 
-                <ul class="list-unstyled">
-                    <li class="media">
-                        <img src="https://tse2.mm.bing.net/th?id=OIP.NuQ-6tOrhiDhX9bnCFy6XwAAAA&pid=Api" class="mr-3" alt="...">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">Recipe Title</h5>
-                            <h6>Meal Type</h6>
-                            <button class="btn btn-primary">Edit</button>
-                            <button class="btn btn-danger">Delete</button>
-                        </div>
-                    </li>
-                </ul>
+                <% if(recipes.length > 0) { %>
+                    <ul class="list-unstyled">
+                        <% for(let recipe of recipes) { %>
+                            <li class="media">
+                                <img src="<%= recipe.imageUrl %>" class="mr-3" alt="<%= recipe.title %>">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1"><%= recipe.title %></h5>
+                                    <h6><%= recipe.meal %></h6>
+                                    <button class="btn btn-primary">Edit</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <h1>No recipes found</h1>
+                <% } %>
             </div>
         </div>
     </main>

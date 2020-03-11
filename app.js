@@ -3,8 +3,11 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
+
+const MONGODB_URI = `${process.env.MONGO_URI}`;
 
 const app = express();
 
@@ -28,4 +31,11 @@ app.use(recipeRoutes);
 
 app.use(errorController.get404);
 
-app.listen(process.env.PORT || 3000);
+mongoose
+  .connect(MONGODB_URI)
+  .then(result => {
+    app.listen(process.env.PORT || 3000);
+  })
+  .catch(error => {
+    console.log(error)
+  });

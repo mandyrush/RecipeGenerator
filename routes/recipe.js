@@ -10,6 +10,12 @@ router.get('/recipes', recipeController.getRecipes);
 
 router.get('/recipe', recipeController.getRecipe);
 
-router.get('/add-recipe', recipeController.addRecipe);
+router.get('/add-recipe', recipeController.getAddRecipe);
+
+router.post('/add-recipe', recipeController.postRecipe);
+
+router.get('/add-ingredient/:recipeId', recipeController.getAddIngredient);
+
+router.post('/add-ingredient/:recipeId', recipeController.postAddIngredient);
 
 module.exports = router;
