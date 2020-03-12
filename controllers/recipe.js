@@ -21,9 +21,17 @@ exports.getRecipes = (req, res, next) => {
 };
 
 exports.getRecipe = (req, res, next) => {
-  res.render('recipe/recipe-detail', {
-    pageTitle: 'Recipe Detail'
-  })
+  const recipeId = req.params.recipeId;
+  Recipe.findById(recipeId)
+    .then(recipe => {
+      res.render('recipe/recipe-detail', {
+        pageTitle: 'Recipe Detail',
+        recipe: recipe
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 exports.getAddRecipe = (req, res, next) => {
@@ -53,25 +61,38 @@ exports.postRecipe = (req, res, next) => {
 
 exports.getAddIngredient = (req, res, next) => {
   const recipeId = req.params.recipeId;
-  res.render('recipe/add-ingredient', {
-    pageTitle: 'Add Ingredient',
-    recipeId: recipeId
-  })
+  Recipe.findById(recipeId)
+    .then(recipe => {
+      res.render('recipe/add-ingredient', {
+        pageTitle: 'Add Ingredient',
+        recipe: recipe
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 exports.postAddIngredient = (req, res, next) => {
-  const ingredient = req.body.ingredient;
-  const quantity = req.body.quantity;
   const recipeId = req.params.recipeId;
+  const ingredient = req.body.ingredient;
+  const measurementUnit = req.body.measurementUnit;
+  let currentRecipe = {};
+  const quantity = req.body.quantity;
   Recipe.findById(recipeId)
     .then(recipe => {
+      currentRecipe = recipe;
       recipe.addIngredient({
         quantity: quantity,
+        measurementUnit: measurementUnit,
         ingredient: ingredient
       })
     })
     .then(result => {
-      res.redirect('/add-ingredient/' + recipeId);
+      return res.render('recipe/add-ingredient', {
+        pageTitle: 'Add Ingredient',
+        recipe: currentRecipe
+      })
     })
     .catch(error => {
       console.log(error);

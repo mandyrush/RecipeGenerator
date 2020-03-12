@@ -24,6 +24,9 @@ const recipeSchema = new Schema({
         type: Number,
         required: true
       },
+      measurementUnit: {
+        type: String
+      },
       ingredient: {
         type: String,
         required: true

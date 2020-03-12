@@ -14,13 +14,15 @@
                     <ul class="list-unstyled">
                         <% for(let recipe of recipes) { %>
                             <li class="media">
-                                <img src="<%= recipe.imageUrl %>" class="mr-3" alt="<%= recipe.title %>">
-                                <div class="media-body">
-                                    <h5 class="mt-0 mb-1"><%= recipe.title %></h5>
-                                    <h6><%= recipe.meal %></h6>
-                                    <button class="btn btn-primary">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
-                                </div>
+                                <a href="/recipe/<%= recipe._id %>">
+                                    <img src="<%= recipe.imageUrl %>" class="mr-3" alt="<%= recipe.title %>">
+                                    <div class="media-body">
+                                        <h5 class="mt-0 mb-1"><%= recipe.title %></h5>
+                                        <h6><%= recipe.meal %></h6>
+                                        <button class="btn btn-primary">Edit</button>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </div>
+                                </a>
                             </li>
                         <% } %>
                     </ul>

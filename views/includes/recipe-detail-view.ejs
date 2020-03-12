@@ -1,0 +1,10 @@
+<article>
+    <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
+    <h1><%= recipe.title %></h1>
+    <% for (ing of recipe.ingredients) { %>
+    <ul>
+        <li><%= ing.quantity %> <%= ing.measurementUnit %> <%= ing.ingredient %></li>
+    </ul>
+    <% } %>
+    <p><%= recipe.mealType %></p>
+</article>
