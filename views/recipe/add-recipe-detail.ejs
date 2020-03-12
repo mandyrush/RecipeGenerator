@@ -26,6 +26,18 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Add Ingredient</button>
                 </form>
+
+                <h1>Add Directions</h1>
+                <form action="/add-direction/<%= recipe._id %>" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="direction">Direction</label>
+                            <input type="text" class="form-control" id="direction" name="direction">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Direction</button>
+                </form>
+
                 <a href="/recipes" class="btn btn-secondary">Done</a>
             </div>
             <%- include('../includes/recipe-detail-view.ejs', {recipe: recipe}) %>

@@ -18,4 +18,8 @@ router.get('/add-ingredient/:recipeId', recipeController.getAddIngredient);
 
 router.post('/add-ingredient/:recipeId', recipeController.postAddIngredient);
 
+router.post('/add-direction/:recipeId', recipeController.postAddDirection);
+
+router.post('/delete-recipe', recipeController.postDeleteRecipe);
+
 module.exports = router;

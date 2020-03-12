@@ -21,7 +21,7 @@ const recipeSchema = new Schema({
         type: Schema.Types.ObjectId
       },
       quantity: {
-        type: Number,
+        type: String,
         required: true
       },
       measurementUnit: {
@@ -47,6 +47,13 @@ recipeSchema.methods.addIngredient = function(ingredient) {
   let updatedIngredients = [...this.ingredients];
   updatedIngredients.push(ingredient);
   this.ingredients = updatedIngredients;
+  return this.save();
+};
+
+recipeSchema.methods.addDirection = function(direction) {
+  let updatedDirections = [...this.directions];
+  updatedDirections.push(direction);
+  this.directions = updatedDirections;
   return this.save();
 };
 

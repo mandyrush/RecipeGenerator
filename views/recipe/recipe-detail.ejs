@@ -5,10 +5,15 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
     <main class="container-fluid">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-6 mt-5">
                 <h1>Recipe Detail</h1>
                 <%- include('../includes/recipe-detail-view.ejs', {recipe: recipe}) %>
+                <button class="btn btn-primary">Edit</button>
+                <form action="/delete-recipe" method="POST">
+                    <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </main>

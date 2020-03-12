@@ -16,7 +16,6 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin');
 const recipeRoutes = require('./routes/recipe');
 
 // Middleware to parse request body into key:value pairs
@@ -26,7 +25,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(authRoutes);
-app.use('/admin', adminRoutes);
 app.use(recipeRoutes);
 
 app.use(errorController.get404);

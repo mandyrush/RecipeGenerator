@@ -63,7 +63,7 @@ exports.getAddIngredient = (req, res, next) => {
   const recipeId = req.params.recipeId;
   Recipe.findById(recipeId)
     .then(recipe => {
-      res.render('recipe/add-ingredient', {
+      res.render('recipe/add-recipe-detail', {
         pageTitle: 'Add Ingredient',
         recipe: recipe
       })
@@ -89,10 +89,44 @@ exports.postAddIngredient = (req, res, next) => {
       })
     })
     .then(result => {
-      return res.render('recipe/add-ingredient', {
+      return res.render('recipe/add-recipe-detail', {
         pageTitle: 'Add Ingredient',
         recipe: currentRecipe
       })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
+
+exports.postAddDirection = (req, res, next) => {
+  const recipeId = req.params.recipeId;
+  const direction = req.body.direction;
+  let currentRecipe = {};
+  Recipe.findById(recipeId)
+    .then(recipe => {
+      currentRecipe = recipe;
+      recipe.addDirection({
+        direction: direction
+      })
+    })
+    .then(result => {
+      return res.render('recipe/add-recipe-detail', {
+        pageTitle: 'Add Ingredient',
+        recipe: currentRecipe
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
+
+exports.postDeleteRecipe = (req, res, next) => {
+  const recipeId = req.body.recipeId;
+  Recipe.deleteOne({ _id: recipeId})
+    .then(result => {
+      console.log('Recipe Deleted');
+      res.redirect('/recipes');
     })
     .catch(error => {
       console.log(error);
