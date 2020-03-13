@@ -3,9 +3,16 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getRegister = (req, res, next) => {
+  let message = req.flash('error');
+  if(message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/register', {
     pageTitle: 'Register',
-    isAuthenticated: false
+    errorMessage: message,
+    path: '/register'
   })
 };
 
@@ -16,6 +23,7 @@ exports.postRegister = (req, res, next) => {
   User.findOne({ email: email })
     .then(userDoc => {
       if(userDoc) {
+        req.flash('error', 'User already exists, please try again.');
         return res.redirect('/register')
       }
       return bcrypt.hash(password, 12)
@@ -36,9 +44,16 @@ exports.postRegister = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  if(message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/login', {
     pageTitle: 'Login',
-    isAuthenticated: false
+    errorMessage: message,
+    path: '/login'
   })
 };
 
@@ -48,6 +63,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({email: email})
     .then(user => {
       if(!user) {
+        req.flash('error', 'Invalid email or password.');
         return res.redirect('/login');
       }
       bcrypt
@@ -61,6 +77,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/');
             });
           }
+          req.flash('error', 'Invalid email or password.');
           res.redirect('/login');
         })
     })

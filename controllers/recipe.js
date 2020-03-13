@@ -2,7 +2,8 @@ const Recipe = require('../models/recipe');
 
 exports.getIndex = (req, res, next) => {
   res.render('recipe/index', {
-    pageTitle: 'Recipes'
+    pageTitle: 'Recipes',
+    path: '/'
   })
 };
 
@@ -11,7 +12,8 @@ exports.getRecipes = (req, res, next) => {
     .then(recipes => {
       res.render('recipe/recipes', {
         pageTitle: 'My Recipes',
-        recipes: recipes
+        recipes: recipes,
+        path: '/recipes'
       })
     })
     .catch(error => {
@@ -25,7 +27,8 @@ exports.getRecipe = (req, res, next) => {
     .then(recipe => {
       res.render('recipe/recipe-detail', {
         pageTitle: 'Recipe Detail',
-        recipe: recipe
+        recipe: recipe,
+        path: '/recipes'
       })
     })
     .catch(error => {
@@ -35,7 +38,8 @@ exports.getRecipe = (req, res, next) => {
 
 exports.getAddRecipe = (req, res, next) => {
   res.render('recipe/add-recipe', {
-    pageTitle: 'Add Recipe'
+    pageTitle: 'Add Recipe',
+    path: '/recipes'
   })
 };
 
@@ -65,7 +69,8 @@ exports.getAddRecipeDetail = (req, res, next) => {
     .then(recipe => {
       res.render('recipe/add-recipe-detail', {
         pageTitle: 'Add Ingredient',
-        recipe: recipe
+        recipe: recipe,
+        path: '/recipes'
       })
     })
     .catch(error => {
@@ -96,12 +101,14 @@ exports.postAddIngredient = (req, res, next) => {
       if(editMode === 'true') {
         return res.render('recipe/edit-recipe', {
           pageTitle: 'Edit Recipe',
-          recipe: currentRecipe
+          recipe: currentRecipe,
+          path: '/recipes'
         })
       } else {
         return res.render('recipe/add-recipe-detail', {
           pageTitle: 'Add Ingredient',
-          recipe: currentRecipe
+          recipe: currentRecipe,
+          path: '/recipes'
         })
       }
     })
@@ -129,12 +136,14 @@ exports.postAddDirection = (req, res, next) => {
       if(editMode) {
         return res.render('recipe/edit-recipe', {
           pageTitle: 'Edit Recipe',
-          recipe: currentRecipe
+          recipe: currentRecipe,
+          path: '/recipes'
         })
       } else {
         return res.render('recipe/add-recipe-detail', {
           pageTitle: 'Add Ingredient',
-          recipe: currentRecipe
+          recipe: currentRecipe,
+          path: '/recipes'
         })
       }
     })
@@ -149,7 +158,8 @@ exports.getEditRecipe = (req, res, next) => {
     .then(recipe => {
       res.render('recipe/edit-recipe', {
         pageTitle: 'Edit Recipe',
-        recipe: recipe
+        recipe: recipe,
+        path: '/recipes'
       })
     })
     .catch(error => {
@@ -207,7 +217,8 @@ exports.postDeleteIngredient = (req, res, next) => {
     .then(result => {
       return res.render('recipe/edit-recipe', {
         pageTitle: 'Edit Recipe',
-        recipe: currentRecipe
+        recipe: currentRecipe,
+        path: '/recipes'
       })
     })
     .catch(error => {
@@ -230,7 +241,8 @@ exports.postDeleteDirection = (req, res, next) => {
     .then(result => {
       return res.render('recipe/edit-recipe', {
         pageTitle: 'Edit Recipe',
-        recipe: currentRecipe
+        recipe: currentRecipe,
+        path: '/recipes'
       })
     })
     .catch(error => {

@@ -8,18 +8,20 @@
         <% if(isAuthenticated) { %>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/recipes">My Recipes</a>
+                    <a class="<%= path === '/recipes' ? 'active nav-link' : 'nav-link' %>" href="/recipes">
+                        My Recipes
+                    </a>
                 </li>
             </ul>
         <% } %>
 
         <ul class="navbar-nav ml-auto">
             <% if(!isAuthenticated) { %>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="<%= path === '/login' ? 'active nav-link' : 'nav-link' %>" href="/login">Login <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
+                    <a class="<%= path === '/register' ? 'active nav-link' : 'nav-link' %>" href="/register">Register</a>
                 </li>
             <% } else { %>
                 <li class="nav-item active">
