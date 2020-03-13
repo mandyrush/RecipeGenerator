@@ -40,7 +40,12 @@ const recipeSchema = new Schema({
         required: true
       }
     }
-  ]
+  ],
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User,',
+    required: true
+  }
 });
 
 recipeSchema.methods.addIngredient = function(ingredient) {
@@ -60,6 +65,13 @@ recipeSchema.methods.deleteIngredient = function(ingredientId) {
 recipeSchema.methods.addDirection = function(direction) {
   let updatedDirections = [...this.directions];
   updatedDirections.push(direction);
+  this.directions = updatedDirections;
+  return this.save();
+};
+
+recipeSchema.methods.deleteDirection = function(directionId) {
+  let updatedDirections = [...this.directions];
+  updatedDirections = updatedDirections.filter(dir => dir._id.toString() !== directionId.toString());
   this.directions = updatedDirections;
   return this.save();
 };

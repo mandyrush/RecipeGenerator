@@ -12,6 +12,7 @@
                 <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn btn-primary">Edit</a>
                 <form action="/delete-recipe" method="POST">
                     <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>

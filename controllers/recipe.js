@@ -7,7 +7,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getRecipes = (req, res, next) => {
-  Recipe.find()
+  Recipe.find({userId: req.session.user._id })
     .then(recipes => {
       res.render('recipe/recipes', {
         pageTitle: 'My Recipes',
@@ -17,7 +17,6 @@ exports.getRecipes = (req, res, next) => {
     .catch(error => {
       console.log(error);
     });
-
 };
 
 exports.getRecipe = (req, res, next) => {
@@ -47,7 +46,8 @@ exports.postRecipe = (req, res, next) => {
   const recipe = new Recipe({
     title: title,
     mealType: mealType,
-    imageUrl: imageUrl
+    imageUrl: imageUrl,
+    userId: req.session.user._id
   });
   recipe.save()
     .then(recipe => {
@@ -82,6 +82,9 @@ exports.postAddIngredient = (req, res, next) => {
   const quantity = req.body.quantity;
   Recipe.findById(recipeId)
     .then(recipe => {
+      if(recipe.userId.toString() !== req.session.user._id.toString()) {
+        res.redirect('/')
+      }
       recipe.addIngredient({
         quantity: quantity,
         measurementUnit: measurementUnit,
@@ -90,7 +93,7 @@ exports.postAddIngredient = (req, res, next) => {
       currentRecipe = recipe;
     })
     .then(result => {
-      if(editMode) {
+      if(editMode === 'true') {
         return res.render('recipe/edit-recipe', {
           pageTitle: 'Edit Recipe',
           recipe: currentRecipe
@@ -114,6 +117,9 @@ exports.postAddDirection = (req, res, next) => {
   let currentRecipe = {};
   Recipe.findById(recipeId)
     .then(recipe => {
+      if(recipe.userId.toString() !== req.session.user._id.toString()) {
+        res.redirect('/')
+      }
       recipe.addDirection({
         direction: direction
       });
@@ -158,6 +164,9 @@ exports.postEditRecipe = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   Recipe.findById(recipeId)
     .then(recipe => {
+      if(recipe.userId.toString() !== req.session.user._id.toString()) {
+        res.redirect('/')
+      }
       recipe.title = updatedTitle;
       recipe.mealType = updatedMealType;
       recipe.imageUrl = updatedImageUrl;
@@ -173,7 +182,7 @@ exports.postEditRecipe = (req, res, next) => {
 
 exports.postDeleteRecipe = (req, res, next) => {
   const recipeId = req.body.recipeId;
-  Recipe.deleteOne({ _id: recipeId})
+  Recipe.deleteOne({ _id: recipeId, userId: req.session.user._id })
     .then(result => {
       console.log('Recipe Deleted');
       res.redirect('/recipes');
@@ -189,7 +198,33 @@ exports.postDeleteIngredient = (req, res, next) => {
   let currentRecipe;
   Recipe.findById(recipeId)
     .then(recipe => {
+      if(recipe.userId.toString() !== req.session.user._id.toString()) {
+        res.redirect('/')
+      }
       recipe.deleteIngredient(ingredientId);
+      currentRecipe = recipe;
+    })
+    .then(result => {
+      return res.render('recipe/edit-recipe', {
+        pageTitle: 'Edit Recipe',
+        recipe: currentRecipe
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+};
+
+exports.postDeleteDirection = (req, res, next) => {
+  const directionId = req.body.directionId;
+  const recipeId = req.body.recipeId;
+  let currentRecipe;
+  Recipe.findById(recipeId)
+    .then(recipe => {
+      if(recipe.userId.toString() !== req.session.user._id.toString()) {
+        res.redirect('/')
+      }
+      recipe.deleteDirection(directionId);
       currentRecipe = recipe;
     })
     .then(result => {

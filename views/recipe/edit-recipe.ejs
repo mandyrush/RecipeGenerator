@@ -73,6 +73,7 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
@@ -86,6 +87,7 @@
                             <form action="/delete-ingredient" method="POST">
                                 <input type="hidden" name="recipeId" value="<%= recipe._id %>">
                                 <input type="hidden" name="ingredientId" value="<%= ing._id %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button type="submit" class="btn btn-danger mb-1">x</button>
                             </form>
                             <span><%= ing.quantity %> <%= ing.measurementUnit %> <%= ing.ingredient %></span>
@@ -123,6 +125,7 @@
                         </div>
                         <div class="form-group col-1 mt-auto">
                             <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button type="submit" class="btn btn-primary">+</button>
                         </div>
                     </div>
@@ -132,7 +135,12 @@
                 <ul>
                     <% for(dir of recipe.directions) { %>
                         <li class="remove-bullet">
-                            <button class="btn btn-danger mb-1">x</button>
+                            <form action="/delete-direction" method="POST">
+                                <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                                <input type="hidden" name="directionId" value="<%= dir._id %>">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="btn btn-danger mb-1">x</button>
+                            </form>
                             <%= dir.direction %>
                         </li>
                     <% } %>
@@ -150,6 +158,7 @@
                         </div>
                         <div class="form-group col-1 mt-auto">
                             <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <button type="submit" class="btn btn-primary">+</button>
                         </div>
                     </div>
