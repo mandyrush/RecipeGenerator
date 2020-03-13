@@ -1,0 +1,160 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/list.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <h1>Edit Recipe</h1>
+                <form action="/edit-recipe" method="POST">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                value="<%= recipe.title %>"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="mealType">Meal Type</label>
+                        <select class="custom-select" id="mealType" name="mealType">
+                            <option
+                                value="Breakfast"
+                                <% if(recipe.mealType === 'Breakfast') { %>selected<% } %>
+                            >
+                                Breakfast
+                            </option>
+                            <option
+                                value="Lunch"
+                                <% if(recipe.mealType === 'Lunch') { %>selected<% } %>
+                            >
+                                Lunch
+                            </option>
+                            <option
+                                value="Dinner"
+                                <% if(recipe.mealType === 'Dinner') { %>selected<% } %>
+                            >
+                                Dinner
+                            </option>
+                            <option
+                                value="Snack"
+                                <% if(recipe.mealType === 'Snack') { %>selected<% } %>
+                            >
+                                Snack
+                            </option>
+                            <option
+                                value="Dessert"
+                                <% if(recipe.mealType === 'Dessert') { %>selected<% } %>
+                            >
+                                Dessert
+                            </option>
+                        </select>
+                    </div>
+                    <img src="<%= recipe.imageUrl %>" alt="<%= recipe.title %>">
+                    <div class="form-group">
+                        <label for="imageUrl">Image</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="imageUrl"
+                                name="imageUrl"
+                                value="<%= recipe.imageUrl %>"
+                        >
+                        <!--                        <div class="custom-file">-->
+                        <!--                            <input type="file" class="custom-file-input" id="customFile" name="imageUrl">-->
+                        <!--                            <label class="custom-file-label" for="customFile">Choose file</label>-->
+                        <!--                        </div>-->
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 mt-5">
+                <h4>Ingredients</h4>
+                <ul>
+                    <% for(ing of recipe.ingredients) { %>
+                        <li class="remove-bullet">
+                            <form action="/delete-ingredient" method="POST">
+                                <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                                <input type="hidden" name="ingredientId" value="<%= ing._id %>">
+                                <button type="submit" class="btn btn-danger mb-1">x</button>
+                            </form>
+                            <span><%= ing.quantity %> <%= ing.measurementUnit %> <%= ing.ingredient %></span>
+                        </li>
+                    <% } %>
+                </ul>
+                <form action="/add-ingredient?edit=true" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            <label for="quantity">Quantity</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="quantity"
+                                    name="quantity"
+                            >
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="measurementUnit">Unit</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="measurementUnit"
+                                    name="measurementUnit"
+                            >
+                        </div>
+                        <div class="form-group col-7">
+                            <label for="ingredient">Ingredient</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="ingredient"
+                                    name="ingredient"
+                            >
+                        </div>
+                        <div class="form-group col-1 mt-auto">
+                            <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                            <button type="submit" class="btn btn-primary">+</button>
+                        </div>
+                    </div>
+                </form>
+
+                <h4>Directions</h4>
+                <ul>
+                    <% for(dir of recipe.directions) { %>
+                        <li class="remove-bullet">
+                            <button class="btn btn-danger mb-1">x</button>
+                            <%= dir.direction %>
+                        </li>
+                    <% } %>
+                </ul>
+                <form action="/add-direction?edit=true" method="POST">
+                    <div class="form-row">
+                        <div class="form-group col-11">
+                            <label for="direction">Direction</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="direction"
+                                    name="direction"
+                            >
+                        </div>
+                        <div class="form-group col-1 mt-auto">
+                            <input type="hidden" name="recipeId" value="<%= recipe._id %>">
+                            <button type="submit" class="btn btn-primary">+</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>

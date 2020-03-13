@@ -9,7 +9,7 @@
             <div class="col-md-6 mt-5">
                 <h1>Recipe Detail</h1>
                 <%- include('../includes/recipe-detail-view.ejs', {recipe: recipe}) %>
-                <button class="btn btn-primary">Edit</button>
+                <a href="/edit-recipe/<%= recipe._id %>?edit=true" class="btn btn-primary">Edit</a>
                 <form action="/delete-recipe" method="POST">
                     <input type="hidden" name="recipeId" value="<%= recipe._id %>">
                     <button type="submit" class="btn btn-danger">Delete</button>

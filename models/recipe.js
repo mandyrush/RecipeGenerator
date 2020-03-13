@@ -50,6 +50,13 @@ recipeSchema.methods.addIngredient = function(ingredient) {
   return this.save();
 };
 
+recipeSchema.methods.deleteIngredient = function(ingredientId) {
+  let updatedIngredients = [...this.ingredients];
+  updatedIngredients = updatedIngredients.filter(ing => ing._id.toString() !== ingredientId.toString());
+  this.ingredients = updatedIngredients;
+  return this.save();
+};
+
 recipeSchema.methods.addDirection = function(direction) {
   let updatedDirections = [...this.directions];
   updatedDirections.push(direction);

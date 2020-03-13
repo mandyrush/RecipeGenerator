@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6 mt-5">
                 <h1>Add Ingredients</h1>
-                <form action="/add-ingredient/<%= recipe._id %>" method="POST">
+                <form action="/add-ingredient?edit=false" method="POST">
                     <div class="form-row">
                         <div class="form-group col-2">
                             <label for="quantity">Quantity</label>
@@ -24,17 +24,19 @@
                             <input type="text" class="form-control" id="ingredient" name="ingredient">
                         </div>
                     </div>
+                    <input type="hidden" name="recipeId" value="<%= recipe._id %>">
                     <button type="submit" class="btn btn-primary">Add Ingredient</button>
                 </form>
 
                 <h1>Add Directions</h1>
-                <form action="/add-direction/<%= recipe._id %>" method="POST">
+                <form action="/add-direction" method="POST">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="direction">Direction</label>
                             <input type="text" class="form-control" id="direction" name="direction">
                         </div>
                     </div>
+                    <input type="hidden" name="recipeId" value="<%= recipe._id %>">
                     <button type="submit" class="btn btn-primary">Add Direction</button>
                 </form>
 
